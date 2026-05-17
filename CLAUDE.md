@@ -113,7 +113,66 @@ Describe the expected output structure here.
 2. Full `SKILL.md` body loads on activation — keep it concise
 3. `references/` and `assets/` files load on demand — push detail here
 
+## Skill workflow patterns
+
+These patterns have been established through building `property-investment-report` and should be reused in future skills where applicable.
+
+### Listing-first pattern (uk-property)
+
+Always understand the asset before running financial analysis. Call `rightmove_listing` (via URL or ID from `rightmove_search`) as the first step. Establish property type, condition, size, and time on market before calling `property_report`, `rental_analysis`, or `stamp_duty`. A barn with planning permission and a finished 3-bed semi return identical postcode-level financial data — the listing is what differentiates them.
+
+### Data sufficiency check
+
+After Phase 1, check what data is available before calling Phase 2 tools. Document what degrades without a house number:
+
+- `rental_analysis` and `stamp_duty` — fully functional from postcode + price alone
+- `property_report` — works but EPC may match a different property at the postcode
+- `ppd_transactions` — works at street level without house number; specific property history needs it
+
+If the house number is missing, prompt the user before Phase 2. Offer to proceed without it if they can't provide it — never block the report.
+
+### Conditional deep-dive / escalation
+
+Define escalation triggers in the skill. If any trigger fires after Phase 2, auto-call `ppd_transactions` and `rightmove_search` (price_high sort) without waiting to be asked. Triggers for uk-property skills: price >10% below area median, listed >6 months, no PPD history, large floor area at or below median price, gross yield >5.5%, EPC D or below with upgrade potential, or "potential/probate/development" listing language.
+
+### Dual scenario output (investment skills)
+
+Always present both a **cash purchase** and a **BTL mortgage** scenario. Calculate the mortgage ICR and flag if the property fails the 125% threshold. Flag commercial elements, non-standard construction, or short leases that restrict BTL mortgage products.
+
+### Investor defaults
+
+For investment-focused skills, apply these without asking:
+
+- SDLT at additional property rates
+- No onward chain assumed
+- Purchase price = midpoint of guide range if a range is given
+
+## Report conventions
+
+### Traffic light rating system
+
+Every section in a report gets a confidence rating:
+
+- 🟢 **Confirmed** — data sourced from MCP tools and verified to match the subject property
+- 🟡 **Estimated** — data is approximate, area-level, from a proxy, or the comparables don't match the property type/size
+- 🔴 **Unconfirmed** — data is missing or known to be from a different property
+
+Include a `📋 Re-run with [specific missing data] to confirm this figure.` note on every 🟡 or 🔴 section.
+
+### Standard report footer
+
+End every investment report with:
+
+> *Report assumes an investment purchase with no onward chain. Timelines may be longer than estimated if a chain is subsequently identified, or if information provided differs from the legal title or survey findings. Sections rated 🟡 or 🔴 are based on estimated or unverified data — re-run with the information indicated to confirm. This report is for informational purposes only and does not constitute financial or legal advice.*
+
+### EPC mismatch handling
+
+`property_report` matches EPC by postcode sector, not by house number. For a postcode with mixed property types, the returned EPC often belongs to a different property. Always compare the EPC floor area and property type against the listing. If they differ: (1) ask the user if they know the EPC, (2) fall back to the EPC stated in the listing key features, (3) if neither is available, mark as 🔴 Unconfirmed.
+
 ## Conventions
+
 - Place all interpretation guidance (e.g. EPC rating scales, yield benchmarks, astrological orbs) in `references/` not in `SKILL.md`
 - Output templates and report structures go in `assets/`
 - Prefer `uk-property-mcp` over `property-shared` unless a specific tool only exists in the latter
+- Accept Rightmove URLs as valid input for uk-property skills — extract listing ID from the URL pattern `rightmove.co.uk/properties/{id}`
+- Version skills in frontmatter (`version: "1.0"`); increment on any structural change to the workflow
