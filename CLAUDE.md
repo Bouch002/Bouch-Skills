@@ -91,7 +91,7 @@ compatibility: Requires uk-property-mcp MCP server
 metadata:
   author: bouch
   version: "1.0"
-allowed-tools: mcp__uk-property-mcp__property_report mcp__uk-property-mcp__property_yield
+allowed-tools: mcp__claude_ai_uk-property-mcp__property_report mcp__claude_ai_uk-property-mcp__property_yield
 ---
 
 ## Overview
