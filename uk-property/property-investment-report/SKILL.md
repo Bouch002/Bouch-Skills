@@ -46,9 +46,17 @@ If the Rightmove URL or address is the only input provided, extract price, postc
 Call `rightmove_listing` directly with the URL or ID. Skip `rightmove_search` entirely.
 
 **If a street address + postcode is provided:**
-Call `rightmove_search` with the postcode at 0.25 mile radius. Match the property by address and price, then call `rightmove_listing` with the matched listing ID for full detail.
+Call `rightmove_search` with the postcode at 0.25 mile radius. Review results and attempt to match by address and price.
 
-If no Rightmove listing is found (off-market, recently agreed, or no match), note it and proceed to Phase 2 using the address/postcode provided. Flag that listing-level data is unavailable.
+**If exactly one match is found** — call `rightmove_listing` on it and proceed.
+
+**If multiple listings match the price or area** — do not guess. Present the candidates to the user and ask them to confirm which property before calling `rightmove_listing`:
+
+> *"I found [N] listings near [postcode] in that price range. Could you confirm which one is yours?*
+> *1. [Address] — £[X] — [brief description]*
+> *2. [Address] — £[X] — [brief description]"*
+
+**If no Rightmove listing is found** — note it and proceed to Phase 2 using the address/postcode provided. Flag that listing-level data is unavailable.
 
 ### Step 2 — Read the full listing
 
