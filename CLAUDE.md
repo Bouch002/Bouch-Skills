@@ -47,13 +47,16 @@ Uses the Celestine MCP (Swiss Ephemeris). **Never compute astrological data manu
 
 | Tool | Purpose |
 |---|---|
-| `birth_chart` | Full natal chart (detail=full\|compact) |
+| `birth_chart` | Full natal chart (detail=full or compact) |
 | `current_transits` | Active transits at a moment |
 | `transit_search` | Transits over a date range |
 | `planetary_positions` | Sky positions for any date |
 | `progression_report` | Secondary progressions + solar arc |
 | `generate_calendar_events` | Astrological calendar with .ics download |
-| `get_planet/sign/house/aspect` | Resource lookups for interpretation |
+| `get_planet` | Planet archetype + rulership lookup |
+| `get_sign` | Sign qualities, themes, shadow lookup |
+| `get_house` | House meanings lookup (1–12) |
+| `get_aspect` | Aspect angle, orb, polarity lookup |
 
 ### uk-archives
 MCP / data source TBC. Update this section once confirmed.
