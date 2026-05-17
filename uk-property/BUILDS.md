@@ -6,7 +6,7 @@ Tracks built and planned skills using `uk-property-mcp` / `property-shared`.
 
 ## Built
 
-### `property-investment-report` — 2026-05-17 (v2 same day)
+### `property-investment-report` — 2026-05-17 (v2.1 same day)
 
 Full buy-to-let investment analysis with listing-first workflow and conditional deep-dive. Phase 1 reads the Rightmove listing before running any financial analysis. Phase 2 runs comparables, yield, rental, and SDLT. Automatically escalates to PPD history + market ceiling search when positive investment signals are detected.
 Tools: `rightmove_search` → `rightmove_listing` → `property_report` + `rental_analysis` + `stamp_duty` → (conditional) `ppd_transactions` + `rightmove_search` (price_high)
