@@ -6,21 +6,15 @@ Tracks built and planned skills using the Celestine MCP (Swiss Ephemeris astrolo
 
 ## Built
 
-_None yet._
+### `natal-reading` — 2026-05-17
+Full birth chart interpretation workflow. Three phases: calculate chart via `birth_chart`, enrich key placements with sign/planet/house/aspect archetypes, synthesise into a structured reading covering the Big Three, personal planets, chart ruler, major aspects, and house themes. Gracefully degrades when birth time is unknown.
+
+### `transit-forecast` — 2026-05-18
+Planetary transit forecast over a user-specified date range. Three phases: calculate transits via `transit_search` (+ `current_transits` if today falls in range), enrich top 8 transits with planet and aspect archetypes, synthesise into a structured forecast with ranked transits, key dates, and period themes. Handles multi-hit retrograde transits, station intensification, and gracefully degrades when birth time is unknown.
 
 ---
 
 ## Planned / Ideas
-
-### `natal-reading`
-Full birth chart interpretation workflow.
-Tools: `birth_chart` (detail=full) → resource reads for planets/signs/houses/aspects
-Output: structured natal chart narrative covering chart shape, key planets, house themes.
-
-### `transit-forecast`
-Transits over a user-specified date range with narrative interpretation.
-Tools: `transit_search` → `current_transits` → resource reads for relevant aspects
-Output: ranked significant transits, themes for the period, key dates to watch.
 
 ### `lunar-calendar`
 Monthly lunar and astrological calendar with downloadable .ics.

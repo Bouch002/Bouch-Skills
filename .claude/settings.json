@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Celestine-mcp__birth_chart",
+      "mcp__claude_ai_Celestine-mcp__get_house",
+      "mcp__claude_ai_Celestine-mcp__get_aspect",
+      "mcp__claude_ai_Celestine-mcp__current_transits",
+      "mcp__claude_ai_Celestine-mcp__get_planet"
+    ]
+  }
+}
